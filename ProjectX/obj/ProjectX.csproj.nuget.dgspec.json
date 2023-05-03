@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\УрФУ\\MonogameProject\\ProjectX\\ProjectX\\ProjectX.csproj": {}
+    "E:\\УрФУ\\MonogameProject\\ProjectXXX\\Game_on_Monogame\\ProjectX\\ProjectX.csproj": {}
   },
   "projects": {
-    "E:\\УрФУ\\MonogameProject\\ProjectX\\ProjectX\\ProjectX.csproj": {
+    "E:\\УрФУ\\MonogameProject\\ProjectXXX\\Game_on_Monogame\\ProjectX\\ProjectX.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\УрФУ\\MonogameProject\\ProjectX\\ProjectX\\ProjectX.csproj",
+        "projectUniqueName": "E:\\УрФУ\\MonogameProject\\ProjectXXX\\Game_on_Monogame\\ProjectX\\ProjectX.csproj",
         "projectName": "ProjectX",
-        "projectPath": "E:\\УрФУ\\MonogameProject\\ProjectX\\ProjectX\\ProjectX.csproj",
+        "projectPath": "E:\\УрФУ\\MonogameProject\\ProjectXXX\\Game_on_Monogame\\ProjectX\\ProjectX.csproj",
         "packagesPath": "C:\\Users\\555\\.nuget\\packages\\",
-        "outputPath": "E:\\УрФУ\\MonogameProject\\ProjectX\\ProjectX\\obj\\",
+        "outputPath": "E:\\УрФУ\\MonogameProject\\ProjectXXX\\Game_on_Monogame\\ProjectX\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

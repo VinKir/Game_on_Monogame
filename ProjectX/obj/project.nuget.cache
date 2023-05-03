@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mDPGAEclZed52uhv/gVYn+MV4jI/U3UgPtJfyqNvJwYbRSFkUSLO6guUK8gCZKXJ6oZUtl/BSsmhKcuGSoWuNw==",
+  "dgSpecHash": "yO5x+qXCvW1W5mT7VLhBMOSJMVtl90h3wQRWaZKxXsthJrR4q1CSupzTpRDa+VEN5BXUHVxNyzdDxOgGqIoXjA==",
   "success": true,
-  "projectFilePath": "E:\\УрФУ\\MonogameProject\\ProjectX\\ProjectX\\ProjectX.csproj",
+  "projectFilePath": "E:\\УрФУ\\MonogameProject\\ProjectXXX\\Game_on_Monogame\\ProjectX\\ProjectX.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\555\\.nuget\\packages\\libuv\\1.9.1\\libuv.1.9.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.codeanalysis.analyzers\\1.1.0\\microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512",
