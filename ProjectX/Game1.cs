@@ -13,18 +13,27 @@ namespace ProjectX
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        enum GameState
+        public enum GameState
         {
             Menu,
             Garage,
             Gameplay,
         }
-
-        GameState state;
+        public enum Block
+        {
+            None, Main, Simple, LeftWheel, RightWheel
+        }
+        public static string[] BlockPaths = new string[] {
+            "Controls/AddBlockButton",
+            "GameSprites/MainBlock",
+            "GameSprites/SimpleBlock",
+            "GameSprites/LeftWheelBlock",
+            "GameSprites/RightWheelBlock", };
 
         Color backgroundColor = Color.CornflowerBlue;
-        List<Component> mainMenuGameComponents;
-        List<Component> garageMenuGameComponents;
+        public GameState state;
+        MainScene mainScene;
+        GarageScene garageScene;
 
         public Game1()
         {
@@ -37,7 +46,12 @@ namespace ProjectX
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.IsFullScreen = true;
+
+            //_graphics.IsFullScreen = true;
+            // to do -------------------------------------------------------------------
+            // разкоментировать, когда игра будет готова, чтоб игра была на весь экран
+            // пока это включено не выходит нормально отлаживать ошибки
+
             _graphics.ApplyChanges();
 
             IsMouseVisible = true;
@@ -49,63 +63,11 @@ namespace ProjectX
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var loadLevelButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/Font"))
-            {
-                Text = "Play",
-            };
-            loadLevelButton.Position = new Vector2(
-                        (Window.ClientBounds.Width / 2) - (loadLevelButton.Rectangle.Width / 2),
-                        (Window.ClientBounds.Height / 2) - (loadLevelButton.Rectangle.Height / 2) - 140);
-            loadLevelButton.Click += QuitButton_Click;
+            mainScene = new MainScene(this, _spriteBatch);
+            garageScene = new GarageScene(this, _spriteBatch);
 
-
-            var loadGarageButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/Font"))
-            {
-                Text = "Garage",
-            };
-            loadGarageButton.Position = new Vector2(
-                        (Window.ClientBounds.Width / 2) - (loadGarageButton.Rectangle.Width / 2),
-                        (Window.ClientBounds.Height / 2) - (loadGarageButton.Rectangle.Height / 2));
-            loadGarageButton.Click += garageSceneOpenButton_Click;
-
-            var quitButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/Font"))
-            {
-                Text = "Quit",
-            };
-            quitButton.Position = new Vector2(
-                        (Window.ClientBounds.Width / 2) - (quitButton.Rectangle.Width / 2),
-                        (Window.ClientBounds.Height / 2) - (quitButton.Rectangle.Height / 2) + 140);
-            quitButton.Click += QuitButton_Click;
-
-            mainMenuGameComponents = new List<Component>() { quitButton, loadGarageButton, loadLevelButton };
-
-            var backToMenuButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/Font"))
-            {
-                Text = "Back",
-                Position = new Vector2(10, 10),
-            };
-            backToMenuButton.Click += backToMenuButton_Click;
-            garageMenuGameComponents = new List<Component>() { backToMenuButton };
-        }
-
-        private void QuitButton_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
-
-        private void backToMenuButton_Click(object sender, EventArgs e)
-        {
-            state = GameState.Menu;
-        }
-
-        private void garageSceneOpenButton_Click(object sender, EventArgs e)
-        {
-            state = GameState.Garage;
-        }
-
-        private void loadLevelButton_Click(object sender, EventArgs e)
-        {
-            state = GameState.Gameplay;
+            mainScene.LoadContent();
+            garageScene.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -113,13 +75,13 @@ namespace ProjectX
             switch (state)
             {
                 case GameState.Menu:
-                    UpdateMenu(gameTime);
+                    mainScene.UpdateMenu(gameTime);
                     break;
                 case GameState.Gameplay:
                     UpdateGameplay(gameTime);
                     break;
                 case GameState.Garage:
-                    UpdateGarage(gameTime);
+                    garageScene.UpdateGarage(gameTime);
                     break;
             }
 
@@ -133,58 +95,23 @@ namespace ProjectX
             switch (state)
             {
                 case GameState.Menu:
-                    DrawMenu(gameTime);
+                    mainScene.DrawMenu(gameTime);
                     break;
                 case GameState.Gameplay:
                     DrawGameplay(gameTime);
                     break;
                 case GameState.Garage:
-                    DrawGarage(gameTime);
+                    garageScene.DrawGarage(gameTime);
                     break;
             }
 
             base.Draw(gameTime);
         }
 
-        void UpdateMenu(GameTime gameTime)
-        {
-            // Обрабатывает действия игрока в экране меню
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            foreach (var component in mainMenuGameComponents)
-                component.Update(gameTime);
-        }
-
-        void UpdateGarage(GameTime gameTime)
-        {
-            // Обрабатывает действия игрока в гараже
-            foreach (var component in garageMenuGameComponents)
-                component.Update(gameTime);
-        }
-
         void UpdateGameplay(GameTime gameTime)
         {
             // Обновляет состояние игровых объектов, действия игрока.
             throw new NotImplementedException();
-        }
-
-        void DrawMenu(GameTime gameTime)
-        {
-            // Отрисовка меню, кнопок и т.д.
-            _spriteBatch.Begin();
-            foreach (var component in mainMenuGameComponents)
-                component.Draw(gameTime, _spriteBatch);
-            _spriteBatch.End();
-        }
-
-        void DrawGarage(GameTime gameTime)
-        {
-            // Отрисовка результатов, кнопок и т.д.
-            _spriteBatch.Begin();
-            foreach (var component in garageMenuGameComponents)
-                component.Draw(gameTime, _spriteBatch);
-            _spriteBatch.End();
         }
 
         void DrawGameplay(GameTime gameTime)

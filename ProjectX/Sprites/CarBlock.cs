@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectX.Sprites
 {
-    class CarBlock : Sprite
+    public class CarBlock : Sprite
     {
         public int maxHp;
         int hp;

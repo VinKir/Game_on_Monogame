@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 namespace ProjectX.Controls
 {
-    class Button : Component
+    public class Button : Component
     {
         #region Fields
 
         MouseState currentMouse;
         MouseState previousMouse;
         SpriteFont font;
-        Texture2D texture;
         bool isHovering;
+
+        public Texture2D texture;
 
         #endregion
 
