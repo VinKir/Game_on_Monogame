@@ -82,3 +82,5 @@ E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Debug\net6.
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Debug\net6.0-windows\ProjectX.genruntimeconfig.cache
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Debug\net6.0-windows\ref\ProjectX.dll
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\Controls\AddBlockButton.xnb
+E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\GameSprites\CannonBlock.xnb
+E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\GameSprites\GunBaseBlock.xnb

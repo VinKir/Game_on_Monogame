@@ -21,14 +21,16 @@ namespace ProjectX
         }
         public enum Block
         {
-            None, Main, Simple, LeftWheel, RightWheel
+            None, Main, Simple, LeftWheel, RightWheel, GunBase, Cannon
         }
         public static string[] BlockPaths = new string[] {
             "Controls/AddBlockButton",
             "GameSprites/MainBlock",
             "GameSprites/SimpleBlock",
             "GameSprites/LeftWheelBlock",
-            "GameSprites/RightWheelBlock", };
+            "GameSprites/RightWheelBlock",
+            "GameSprites/GunBaseBlock",
+            "GameSprites/CannonBlock", };
 
         Color backgroundColor = Color.CornflowerBlue;
         public GameState state;

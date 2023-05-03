@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/Controls/AddBlockButton.jpg</SourceFile>
-  <SourceTime>2023-05-03T19:17:39.8038374+05:00</SourceTime>
+  <SourceFile>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/Controls/AddBlockButton.png</SourceFile>
+  <SourceTime>2023-05-03T21:08:29.4864112+05:00</SourceTime>
   <DestFile>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/bin/Windows/Content/Controls/AddBlockButton.xnb</DestFile>
-  <DestTime>2023-05-03T19:38:15.913842+05:00</DestTime>
+  <DestTime>2023-05-03T21:09:26.0228287+05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T16:44:56+05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

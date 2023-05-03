@@ -28,9 +28,9 @@ namespace ProjectX.Controls
             this.game = game;
             _spriteBatch = spriteBatch;
             Window = game.Window;
-            carBlocks = new Block[10, 10];
+            carBlocks = new Block[11, 11];
             InitializeMachineArray();
-            carBlocksButtons = new Button[10, 10];
+            carBlocksButtons = new Button[11, 11];
         }
 
         void InitializeMachineArray()
@@ -64,8 +64,8 @@ namespace ProjectX.Controls
         {
             #region BuildingZoneButtons
 
-            int buildingZoneX = 700;
-            int buildingZoneY = 300;
+            int buildingZoneX = 600;
+            int buildingZoneY = 270;
             for (int x = 0; x < carBlocks.GetLength(0); x++)
                 for (int y = 0; y < carBlocks.GetLength(1); y++)
                 {
