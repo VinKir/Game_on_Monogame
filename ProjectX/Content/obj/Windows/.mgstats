@@ -1,0 +1,4 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/Controls/Button.jpg","E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/bin/Windows/Controls/Button.xnb","TextureProcessor","Texture2DContent",3253,120085,0,1530531
+"E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/Fonts/Font.spritefont","E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/bin/Windows/Fonts/Font.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0,2253259
+"E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/GameSprites/SimpleBlock.jpg","E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/bin/Windows/GameSprites/SimpleBlock.xnb","TextureProcessor","Texture2DContent",1319,10085,0,0147078
