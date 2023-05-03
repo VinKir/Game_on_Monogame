@@ -4,11 +4,17 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/Controls/Button.jpg</File>
-    <File>E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/Fonts/Font.spritefont</File>
-    <File>E:/УрФУ/MonogameProject/ProjectX/ProjectX/Content/GameSprites/SimpleBlock.jpg</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/Controls/Button.jpg</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/Fonts/Font.spritefont</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/LeftWheelBlock.jpg</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/MainBlock.jpg</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/RightWheelBlock.jpg</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/SimpleBlock.jpg</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
