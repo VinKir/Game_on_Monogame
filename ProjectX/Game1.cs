@@ -34,8 +34,9 @@ namespace ProjectX
 
         Color backgroundColor = Color.CornflowerBlue;
         public GameState state;
-        MainScene mainScene;
-        GarageScene garageScene;
+        public MainScene mainScene;
+        public GarageScene garageScene;
+        public GameScene gameScene;
 
         public Game1()
         {
@@ -67,6 +68,7 @@ namespace ProjectX
 
             mainScene = new MainScene(this, _spriteBatch);
             garageScene = new GarageScene(this, _spriteBatch);
+            gameScene = new GameScene(this, _spriteBatch);
 
             mainScene.LoadContent();
             garageScene.LoadContent();
@@ -80,7 +82,7 @@ namespace ProjectX
                     mainScene.UpdateMenu(gameTime);
                     break;
                 case GameState.Gameplay:
-                    UpdateGameplay(gameTime);
+                    gameScene.UpdateGameplay(gameTime);
                     break;
                 case GameState.Garage:
                     garageScene.UpdateGarage(gameTime);
@@ -100,7 +102,7 @@ namespace ProjectX
                     mainScene.DrawMenu(gameTime);
                     break;
                 case GameState.Gameplay:
-                    DrawGameplay(gameTime);
+                    gameScene.DrawGameplay(gameTime);
                     break;
                 case GameState.Garage:
                     garageScene.DrawGarage(gameTime);
@@ -108,18 +110,6 @@ namespace ProjectX
             }
 
             base.Draw(gameTime);
-        }
-
-        void UpdateGameplay(GameTime gameTime)
-        {
-            // Обновляет состояние игровых объектов, действия игрока.
-            throw new NotImplementedException();
-        }
-
-        void DrawGameplay(GameTime gameTime)
-        {
-            // Отрисовка игровых объектов, счета и т.д.
-            throw new NotImplementedException();
         }
     }
 }

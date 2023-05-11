@@ -13,6 +13,7 @@ namespace ProjectX.Sprites
         protected Texture2D texture;
         protected float rotation;
 
+        public float layer;
         public Vector2 Position;
         public Vector2 Origin;
         public Vector2 Direction;
@@ -25,6 +26,7 @@ namespace ProjectX.Sprites
             Origin = new Vector2(texture.Width / 2, texture.Height / 2);
             color = Color.White;
         }
+
         public virtual void Update(GameTime gameTime)
         {
 

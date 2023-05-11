@@ -2,12 +2,11 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ProjectX.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using static ProjectX.Game1;
-using static ProjectX.Sprites.CarBlock;
+using static ProjectX.GameElements.CarBlock;
 
 namespace ProjectX.Controls
 {
@@ -38,6 +37,23 @@ namespace ProjectX.Controls
             for (int i = 0; i < carBlocks.GetLength(0); i++)
                 for (int j = 0; j < carBlocks.GetLength(1); j++)
                     carBlocks[i, j] = Block.None;
+
+
+            // Developer debug help
+            carBlocks[0, 0] = Block.LeftWheel;
+            carBlocks[0, 2] = Block.LeftWheel;
+            carBlocks[1, 0] = Block.Simple;
+            carBlocks[1, 1] = Block.Simple;
+            carBlocks[1, 2] = Block.Simple;
+            carBlocks[1, 0] = Block.Simple;
+            carBlocks[1, 1] = Block.Main;
+            carBlocks[1, 2] = Block.Cannon;
+            carBlocks[2, 0] = Block.Simple;
+            carBlocks[2, 1] = Block.Simple;
+            carBlocks[2, 2] = Block.Simple;
+            carBlocks[3, 0] = Block.RightWheel;
+            carBlocks[3, 2] = Block.RightWheel;
+
         }
 
         public void LoadContent()
@@ -51,13 +67,6 @@ namespace ProjectX.Controls
 
             garageMenuGameComponents = new List<Component>() { backToMenuButton };
             CreateButtons();
-            var print = new Button(game.Content.Load<Texture2D>("Controls/Button"), game.Content.Load<SpriteFont>("Fonts/Font"))
-            {
-                Position = new Vector2(1500, 800),
-            };
-            print.Click += (s, e) => { print.Text = currBlock.ToString(); };
-
-            garageMenuGameComponents.Add(print);
         }
 
         void CreateButtons()
@@ -77,11 +86,11 @@ namespace ProjectX.Controls
                     var safeX = x;
                     var safeY = y;
                     var safeCurrBlock = currBlock;
-                    changeMachineBlockButton.Click += (s, e) => 
-                    { 
+                    changeMachineBlockButton.Click += (s, e) =>
+                    {
                         carBlocks[safeX, safeY] = currBlock;
                         changeMachineBlockButton.texture = game.Content.Load<Texture2D>(BlockPaths[(int)carBlocks[safeX, safeY]]);
-                     };
+                    };
                     garageMenuGameComponents.Add(changeMachineBlockButton);
                 }
 

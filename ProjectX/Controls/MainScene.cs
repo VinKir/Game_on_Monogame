@@ -87,6 +87,7 @@ namespace ProjectX.Controls
         private void loadLevelButton_Click(object sender, EventArgs e)
         {
             game.state = GameState.Gameplay;
+            game.gameScene.LoadContent();
         }
     }
 }
