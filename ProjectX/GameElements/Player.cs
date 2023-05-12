@@ -19,8 +19,8 @@ namespace ProjectX.GameElements
         public CarBlock mainBlock;
         public int mainBlockIndexX;
         public int mainBlockIndexY;
-        public float carSpeed = 10;
-        public float carRotationSpeed = 0.1f;
+        public float carSpeed = 5;
+        public float carRotationSpeed = 0.03f;
 
         public Player(Game1 game)
         {
@@ -74,15 +74,23 @@ namespace ProjectX.GameElements
 
         void Move()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-                mainBlock.gameObject.Velocity.X -= carSpeed;
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-                mainBlock.gameObject.Velocity.X += carSpeed;
-
+            var MoveDirForwardNoBackward = 0;
             if (Keyboard.GetState().IsKeyDown(Keys.W))
-                mainBlock.gameObject.Velocity.Y -= carSpeed;
+                MoveDirForwardNoBackward = 1;
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
-                mainBlock.gameObject.Velocity.Y += carSpeed;
+                MoveDirForwardNoBackward = -1;
+
+            if (MoveDirForwardNoBackward != 0)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    mainBlock.gameObject.Rotation -= carRotationSpeed;
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    mainBlock.gameObject.Rotation += carRotationSpeed;
+            }
+            mainBlock.gameObject.Velocity.X -=
+                MoveDirForwardNoBackward * (float)Math.Sin(mainBlock.gameObject.Rotation * -1) * carSpeed;
+            mainBlock.gameObject.Velocity.Y -=
+                MoveDirForwardNoBackward * (float)Math.Cos(mainBlock.gameObject.Rotation * -1) * carSpeed;
 
             mainBlock.gameObject.Position += mainBlock.gameObject.Velocity;
             mainBlock.gameObject.Velocity = Vector2.Zero;
@@ -95,16 +103,21 @@ namespace ProjectX.GameElements
             {
                 for (int x = 0; x < car[y].Count; x++)
                 {
-                    if (car[y][x] == null) continue;
-
-                    var posX = mainBlock.gameObject.Position.X +
-                        (x - mainBlockIndexX) * mainBlock.gameObject.rectangle.Width;
-                    var posY = mainBlock.gameObject.Position.Y +
-                        (y - mainBlockIndexY) * mainBlock.gameObject.rectangle.Height;
-                    car[y][x].gameObject.Position = 
-                        new Vector2(posX, posY);
-                    car[y][x].gameObject.Direction = mainBlock.gameObject.Direction;
-                    // to do движение машины
+                    if (car[y][x] == null || car[y][x].block == Block.Main) continue;
+                    var mainBlockX = mainBlock.gameObject.Position.X;
+                    var mainBlockY = mainBlock.gameObject.Position.Y;
+                    var localPosX = mainBlockX +
+                        (x - mainBlockIndexX) * mainBlock.gameObject.rectangle.Width
+                        * (float)Math.Cos(mainBlock.gameObject.Rotation ) -
+                        (y - mainBlockIndexY) * mainBlock.gameObject.rectangle.Height
+                        * (float)Math.Sin(mainBlock.gameObject.Rotation);
+                    var localPosY = mainBlockY +
+                        (y - mainBlockIndexY) * mainBlock.gameObject.rectangle.Height
+                        * (float)Math.Cos(mainBlock.gameObject.Rotation) +
+                        (x - mainBlockIndexX) * mainBlock.gameObject.rectangle.Width
+                        * (float)Math.Sin(mainBlock.gameObject.Rotation);
+                    car[y][x].gameObject.Position = new Vector2(localPosX, localPosY);
+                    car[y][x].gameObject.Rotation = mainBlock.gameObject.Rotation;
                 }
             }
         }

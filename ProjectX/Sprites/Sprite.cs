@@ -13,12 +13,22 @@ namespace ProjectX.Sprites
         protected Texture2D texture;
         protected float rotation;
 
-        public float layer;
+        public float layer = 0;
         public Vector2 Position;
         public Vector2 Origin;
         public Vector2 Direction;
         public Sprite Parent;
         public Color color;
+
+        public Rectangle rectangle
+        {
+            get { return new Rectangle((int)Position.X - (int)Origin.X, (int)Position.Y - (int)Origin.Y, texture.Width, texture.Height); }
+        }
+        public float Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
 
         public Sprite(Texture2D texture)
         {
@@ -29,12 +39,12 @@ namespace ProjectX.Sprites
 
         public virtual void Update(GameTime gameTime)
         {
-
+            Direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, null, color, rotation, Origin, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, Position, null, color, rotation, Origin, 1, SpriteEffects.None, layer);
         }
 
         public object Clone()

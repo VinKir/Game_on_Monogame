@@ -12,15 +12,18 @@ namespace ProjectX.Sprites
     {
         public bool isStatic;
         public float mass;
+        public float RotationVelocity = 3f;
+        public float LinearVelocity = 3f;
         public Vector2 Velocity;
-
-        public Rectangle rectangle
-        {
-            get { return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height); }
-        }
 
         public GameObject(Texture2D texture) : base(texture)
         {
+
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
         }
 
         #region Collision
