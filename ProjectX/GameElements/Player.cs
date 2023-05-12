@@ -108,7 +108,7 @@ namespace ProjectX.GameElements
                     var mainBlockY = mainBlock.gameObject.Position.Y;
                     var localPosX = mainBlockX +
                         (x - mainBlockIndexX) * mainBlock.gameObject.rectangle.Width
-                        * (float)Math.Cos(mainBlock.gameObject.Rotation ) -
+                        * (float)Math.Cos(mainBlock.gameObject.Rotation) -
                         (y - mainBlockIndexY) * mainBlock.gameObject.rectangle.Height
                         * (float)Math.Sin(mainBlock.gameObject.Rotation);
                     var localPosY = mainBlockY +
@@ -117,7 +117,15 @@ namespace ProjectX.GameElements
                         (x - mainBlockIndexX) * mainBlock.gameObject.rectangle.Width
                         * (float)Math.Sin(mainBlock.gameObject.Rotation);
                     car[y][x].gameObject.Position = new Vector2(localPosX, localPosY);
-                    car[y][x].gameObject.Rotation = mainBlock.gameObject.Rotation;
+                    if (car[y][x].block == Block.Cannon)
+                    {
+                        var mousePos = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
+                        var direction = mousePos - car[y][x].gameObject.Position;
+                        var rotation = (float)Math.Atan2(direction.Y, direction.X);
+                        car[y][x].gameObject.Rotation = rotation + (float)Math.PI/2;
+                    }
+                    else
+                        car[y][x].gameObject.Rotation = mainBlock.gameObject.Rotation;
                 }
             }
         }

@@ -14,11 +14,13 @@ namespace ProjectX.Controls
     public class GameScene
     {
         List<Component> gameComponents;
+        List<Component> gameButtons;
         Game1 game;
         GameWindow Window;
         SpriteBatch spriteBatch;
 
         Player player;
+        GameCamera camera;
 
         public GameScene(Game1 game, SpriteBatch _spriteBatch)
         {
@@ -29,7 +31,7 @@ namespace ProjectX.Controls
 
         public void LoadContent()
         {
-            gameComponents = new List<Component>();
+            gameButtons = new List<Component>();
 
             var backToMenuButton = new Button(game.Content.Load<Texture2D>("Controls/Button"), game.Content.Load<SpriteFont>("Fonts/Font"))
             {
@@ -37,10 +39,12 @@ namespace ProjectX.Controls
                 Position = new Vector2(10, 10),
             };
             backToMenuButton.Click += backToMenuButton_Click;
-            gameComponents.Add(backToMenuButton);
+            gameButtons.Add(backToMenuButton);
 
+            gameComponents = new List<Component>();
             player = new Player(game);
             gameComponents.Add(player);
+            camera = new GameCamera();
         }
 
         private void backToMenuButton_Click(object sender, EventArgs e)
@@ -53,12 +57,22 @@ namespace ProjectX.Controls
             foreach (var component in gameComponents)
                 component.Update(gameTime);
 
+            camera.Follow(player.mainBlock.gameObject);
         }
         public void DrawGameplay(GameTime gameTime)
         {
-            // Отрисовка результатов, кнопок и т.д.
+            /*
+             * // Отрисовка кнопок
             spriteBatch.Begin();
+            foreach (var button in gameButtons)
+                button.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
+            */
+            // Отрисовка игровых объектов
+            spriteBatch.Begin(transformMatrix: camera.Transform);
             foreach (var component in gameComponents)
+                component.Draw(gameTime, spriteBatch);
+            foreach (var component in gameButtons)
                 component.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }

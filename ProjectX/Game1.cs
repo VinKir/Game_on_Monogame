@@ -38,6 +38,9 @@ namespace ProjectX
         public GarageScene garageScene;
         public GameScene gameScene;
 
+        public static int ScreenHeight;
+        public static int ScreenWidth;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -49,6 +52,9 @@ namespace ProjectX
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+            ScreenHeight = _graphics.PreferredBackBufferHeight;
+            ScreenWidth = _graphics.PreferredBackBufferWidth;
 
             //_graphics.IsFullScreen = true;
             // to do -------------------------------------------------------------------
