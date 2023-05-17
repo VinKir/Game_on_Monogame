@@ -14,6 +14,7 @@ namespace ProjectX.Sprites
         protected float rotation;
 
         public float layer = 0;
+        public float scale = 1;
         public Vector2 Position;
         public Vector2 Origin;
         public Vector2 Direction;
@@ -22,7 +23,7 @@ namespace ProjectX.Sprites
 
         public Rectangle rectangle
         {
-            get { return new Rectangle((int)Position.X - (int)Origin.X, (int)Position.Y - (int)Origin.Y, texture.Width, texture.Height); }
+            get { return new Rectangle((int)Position.X - (int)Origin.X, (int)Position.Y - (int)Origin.Y, (int)(texture.Width* scale), (int)(texture.Height*scale)); }
         }
         public float Rotation
         {
@@ -44,7 +45,7 @@ namespace ProjectX.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, null, color, rotation, Origin, 1, SpriteEffects.None, layer);
+            spriteBatch.Draw(texture, Position, null, color, rotation, Origin, scale, SpriteEffects.None, layer);
         }
 
         public object Clone()

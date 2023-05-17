@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectX.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,17 @@ namespace ProjectX.GameElements
         public int mainBlockIndexY;
         public float carSpeed = 5;
         public float carRotationSpeed = 0.03f;
+        public float carScaleMultiplier = 0.4f;
+
+        public Bullet Bullet;
+
+        // здесь хранятся например пули, которые тоже нужно в сцене пробегаться по Update и Draw
+        public List<GameObject> gameObjects;
 
         public Player(Game1 game)
         {
             this.game = game;
+            gameObjects = new List<GameObject>();
             InitializeMachine();
             mainBlock.gameObject.Position =
                 new Vector2(game.Window.ClientBounds.Width / 2, game.Window.ClientBounds.Height / 2);
@@ -43,6 +51,7 @@ namespace ProjectX.GameElements
                     {
                         car[y].Add(new CarBlock(game, block));
                         car[y][x].gameObject.isStatic = false;
+                        car[y][x].gameObject.scale = carScaleMultiplier;
                         car[y][x].gameObject.mass = 10;
                         if (block == Block.Main)
                         {
@@ -70,6 +79,25 @@ namespace ProjectX.GameElements
         {
             ScanCar();
             Move();
+            Fire();
+        }
+
+        void Fire()
+        {
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                foreach (var listOfBlocks in car)
+                    foreach (var block in listOfBlocks)
+                        if (block?.block == Block.Cannon)
+                        {
+                            var bullet = Bullet.Clone() as Bullet;
+                            bullet.Rotation = block.gameObject.Rotation - (float)Math.PI / 2;
+                            bullet.Direction = block.gameObject.Direction;
+                            bullet.Position = block.gameObject.Position;
+                            bullet.LinearVelocity = 10;
+                            bullet.LifeSpan = 3f;
+                            bullet.Parent = block.gameObject;
+                            gameObjects.Add(bullet);
+                        }
         }
 
         void Move()
@@ -122,7 +150,7 @@ namespace ProjectX.GameElements
                         var mousePos = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
                         var direction = mousePos - car[y][x].gameObject.Position;
                         var rotation = (float)Math.Atan2(direction.Y, direction.X);
-                        car[y][x].gameObject.Rotation = rotation + (float)Math.PI/2;
+                        car[y][x].gameObject.Rotation = rotation + (float)Math.PI / 2;
                     }
                     else
                         car[y][x].gameObject.Rotation = mainBlock.gameObject.Rotation;

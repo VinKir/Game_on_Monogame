@@ -16,6 +16,9 @@ namespace ProjectX.Sprites
         public float LinearVelocity = 3f;
         public Vector2 Velocity;
 
+        public float LifeSpan = 0f;
+        public bool isRemoved = false;
+
         public GameObject(Texture2D texture) : base(texture)
         {
 

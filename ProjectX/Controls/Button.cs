@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectX.GameElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace ProjectX.Controls
         public bool Clicked { get; private set; }
         public Color PenColor { get; set; }
         public Vector2 Position { get; set; }
+        Vector2 RealPosition;
         public Rectangle Rectangle
         {
             get { return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height); }
@@ -65,12 +67,12 @@ namespace ProjectX.Controls
         {
             previousMouse = currentMouse;
             currentMouse = Mouse.GetState();
-            var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1,1);
+            var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
             isHovering = false;
             if (mouseRectangle.Intersects(Rectangle))
             {
                 isHovering = true;
-                if (currentMouse.LeftButton== ButtonState.Released&& previousMouse.LeftButton == ButtonState.Pressed)
+                if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
                     Click?.Invoke(this, new EventArgs());
                 }
