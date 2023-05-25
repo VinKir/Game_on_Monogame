@@ -1,18 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using static ProjectX.Game1;
-using static ProjectX.GameElements.CarBlock;
+using ProjectX.Entities;
 
-namespace ProjectX.Controls
+namespace ProjectX.Systems
 {
     public class GarageScene
     {
-        List<Component> garageMenuGameComponents;
+        List<GameObject> garageMenuGameObjects;
         Game1 game;
         GameWindow Window;
         SpriteBatch _spriteBatch;
@@ -61,11 +58,11 @@ namespace ProjectX.Controls
             var backToMenuButton = new Button(game.Content.Load<Texture2D>("Controls/Button"), game.Content.Load<SpriteFont>("Fonts/Font"))
             {
                 Text = "Back",
-                Position = new Vector2(10, 10),
             };
+            backToMenuButton.transform.Position = new Vector2(10, 10);
             backToMenuButton.Click += backToMenuButton_Click;
 
-            garageMenuGameComponents = new List<Component>() { backToMenuButton };
+            garageMenuGameObjects = new List<GameObject>() { backToMenuButton };
             CreateButtons();
         }
 
@@ -79,19 +76,19 @@ namespace ProjectX.Controls
                 for (int y = 0; y < carBlocks.GetLength(1); y++)
                 {
                     string texturePath = BlockPaths[(int)carBlocks[x, y]];
-                    var changeMachineBlockButton = new Button(game.Content.Load<Texture2D>(texturePath), game.Content.Load<SpriteFont>("Fonts/Font"))
-                    {
-                        Position = new Vector2(buildingZoneX + 50 * x, buildingZoneY + 50 * y),
-                    };
+                    var changeMachineBlockButton = new Button(game.Content.Load<Texture2D>(texturePath),
+                        game.Content.Load<SpriteFont>("Fonts/Font"));
+                    changeMachineBlockButton.transform.Position =
+                        new Vector2(buildingZoneX + 50 * x, buildingZoneY + 50 * y);
                     var safeX = x;
                     var safeY = y;
                     var safeCurrBlock = currBlock;
                     changeMachineBlockButton.Click += (s, e) =>
                     {
                         carBlocks[safeX, safeY] = currBlock;
-                        changeMachineBlockButton.texture = game.Content.Load<Texture2D>(BlockPaths[(int)carBlocks[safeX, safeY]]);
+                        changeMachineBlockButton.sprite.texture = game.Content.Load<Texture2D>(BlockPaths[(int)carBlocks[safeX, safeY]]);
                     };
-                    garageMenuGameComponents.Add(changeMachineBlockButton);
+                    garageMenuGameObjects.Add(changeMachineBlockButton);
                 }
 
             #endregion
@@ -103,13 +100,12 @@ namespace ProjectX.Controls
             {
                 var id = i;
                 var blockPath = BlockPaths[i];
-                var addCurrBlockButton = new Button(game.Content.Load<Texture2D>(blockPath), game.Content.Load<SpriteFont>("Fonts/Font"))
-                {
-                    Position = new Vector2(10, currPosY),
-                };
+                var addCurrBlockButton = new Button(game.Content.Load<Texture2D>(blockPath),
+                    game.Content.Load<SpriteFont>("Fonts/Font"));
+                addCurrBlockButton.transform.Position = new Vector2(10, currPosY);
                 addCurrBlockButton.Click += (s, e) => { currBlock = (Block)id; };//+= chooseBlock_Click;
 
-                garageMenuGameComponents.Add(addCurrBlockButton);
+                garageMenuGameObjects.Add(addCurrBlockButton);
                 currPosY += 100;
             }
 
@@ -124,7 +120,7 @@ namespace ProjectX.Controls
         public void UpdateGarage(GameTime gameTime)
         {
             // Обрабатывает действия игрока в гараже
-            foreach (var component in garageMenuGameComponents)
+            foreach (var component in garageMenuGameObjects)
                 component.Update(gameTime);
         }
 
@@ -132,7 +128,7 @@ namespace ProjectX.Controls
         {
             // Отрисовка результатов, кнопок и т.д.
             _spriteBatch.Begin();
-            foreach (var component in garageMenuGameComponents)
+            foreach (var component in garageMenuGameObjects)
                 component.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
         }

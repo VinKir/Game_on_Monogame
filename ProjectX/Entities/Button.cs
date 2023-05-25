@@ -1,16 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ProjectX.GameElements;
+using ProjectX.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProjectX.Controls
+namespace ProjectX.Entities
 {
-    public class Button : Component
+    public class Button : GameObject
     {
         #region Fields
 
@@ -19,8 +15,6 @@ namespace ProjectX.Controls
         SpriteFont font;
         bool isHovering;
 
-        public Texture2D texture;
-
         #endregion
 
         #region Properties
@@ -28,12 +22,6 @@ namespace ProjectX.Controls
         public event EventHandler Click;
         public bool Clicked { get; private set; }
         public Color PenColor { get; set; }
-        public Vector2 Position { get; set; }
-        Vector2 RealPosition;
-        public Rectangle Rectangle
-        {
-            get { return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height); }
-        }
         public string Text { get; set; }
 
         #endregion
@@ -42,7 +30,7 @@ namespace ProjectX.Controls
 
         public Button(Texture2D texture, SpriteFont font)
         {
-            this.texture = texture;
+            sprite = new Sprite(texture);
             this.font = font;
             PenColor = Color.Black;
         }
@@ -53,12 +41,12 @@ namespace ProjectX.Controls
             if (isHovering)
                 color = Color.Gray;
 
-            spriteBatch.Draw(texture, Rectangle, color);
+            spriteBatch.Draw(sprite.texture, rectangle, color);
 
             if (!string.IsNullOrEmpty(Text))
             {
-                var x = (Rectangle.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
-                var y = (Rectangle.Y + (Rectangle.Height / 2)) - font.MeasureString(Text).Y / 2;
+                var x = rectangle.X + rectangle.Width / 2 - font.MeasureString(Text).X / 2;
+                var y = rectangle.Y + rectangle.Height / 2 - font.MeasureString(Text).Y / 2;
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColor);
             }
         }
@@ -69,7 +57,7 @@ namespace ProjectX.Controls
             currentMouse = Mouse.GetState();
             var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
             isHovering = false;
-            if (mouseRectangle.Intersects(Rectangle))
+            if (mouseRectangle.Intersects(rectangle))
             {
                 isHovering = true;
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)

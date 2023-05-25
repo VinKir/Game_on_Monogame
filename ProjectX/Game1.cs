@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ProjectX.Controls;
+using ProjectX.Systems;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;

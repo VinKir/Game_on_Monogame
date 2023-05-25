@@ -1,21 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProjectX.Sprites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProjectX.Entities;
 using static ProjectX.Game1;
 
-namespace ProjectX.GameElements
+namespace ProjectX.Components
 {
-    public class CarBlock
+    public class CarBlockComponent
     {
         public int maxHp;
         public int hp;
         public bool isDead = false;
         public GameObject gameObject;
+        public Rigidbody rigidbody;
         public Block block;
 
         public int HP
@@ -29,11 +25,11 @@ namespace ProjectX.GameElements
                     hp = 0;
                     isDead = true;
                 }
-                gameObject.color = new Color((100 - hp / maxHp) * 255, 0, 0);
+                gameObject.sprite.color = new Color((100 - hp / maxHp) * 255, 0, 0);
             }
         }
 
-        public CarBlock(Game1 game, Block _block)
+        public CarBlockComponent(Game1 game, Block _block)
         {
             block = _block;
             gameObject = new GameObject(game.Content.Load<Texture2D>(BlockPaths[(int)_block]));
