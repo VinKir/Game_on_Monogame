@@ -85,3 +85,4 @@ E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\GameSprites\CannonBlock.xnb
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\GameSprites\GunBaseBlock.xnb
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\GameSprites\Bullet.xnb
+E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Debug\net6.0-windows\Content\GameSprites\EnemyBlock.xnb

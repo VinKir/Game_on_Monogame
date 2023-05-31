@@ -2,12 +2,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using ProjectX.Components;
 using System;
+using System.Collections.Generic;
 
 namespace ProjectX.Entities
 {
     public class GameObject : ICloneable
     {
-        public Transform transform;
+        List<IComponent> components = new List<IComponent>();
+
+        public Transform transform = new Transform();
         public Sprite sprite;
         public bool isStatic;
 
@@ -27,14 +30,35 @@ namespace ProjectX.Entities
 
         public GameObject()
         {
-            transform = new Transform();
+            AddComponent(transform);
         }
 
         public GameObject(Texture2D texture)
         {
-            transform = new Transform();
+            AddComponent(transform);
             sprite = new Sprite(texture);
+            AddComponent(sprite);
             transform.Origin = new Vector2(texture.Width / 2, texture.Height / 2);
+        }
+
+        public void AddComponent(IComponent component)
+        {
+            components.Add(component);
+            component.boundEntity = this;
+        }
+
+        public void RemoveComponent(IComponent component)
+        {
+            component.boundEntity = null;
+            components.Remove(component);
+        }
+
+        public T GetComponent<T>() where T : class
+        {
+            foreach (var item in components)
+                if (item as T != null)
+                    return item as T;
+            return null;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -44,9 +68,9 @@ namespace ProjectX.Entities
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (sprite!=null)
-            spriteBatch.Draw(sprite.texture, transform.Position, null, sprite.color,
-                transform.Rotation, transform.Origin, transform.scale, SpriteEffects.None, sprite.layer);
+            if (sprite != null)
+                spriteBatch.Draw(sprite.texture, transform.Position, null, sprite.color,
+                    transform.Rotation, transform.Origin, transform.scale, SpriteEffects.None, sprite.layer);
         }
 
         public object Clone()
@@ -91,6 +115,12 @@ namespace ProjectX.Entities
                 rectangle.Bottom > gameObject.rectangle.Bottom &&
                 rectangle.Right > gameObject.rectangle.Left &&
                 rectangle.Left < gameObject.rectangle.Right;
+        }
+
+        public bool IsTouching(GameObject gameObject)
+        {
+            return IsTouchingLeft(gameObject) || IsTouchingRight(gameObject) ||
+                    IsTouchingTop(gameObject) || IsTouchingBottom(gameObject);
         }
 
         #endregion

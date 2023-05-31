@@ -68,6 +68,18 @@
 /processorParam:TextureFormat=Color
 /build:GameSprites/CannonBlock.png
 
+#begin GameSprites/EnemyBlock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameSprites/EnemyBlock.png
+
 #begin GameSprites/GunBaseBlock.png
 /importer:TextureImporter
 /processor:TextureProcessor

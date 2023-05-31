@@ -9,6 +9,7 @@
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/Fonts/Font.spritefont</File>
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/Bullet.png</File>
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/CannonBlock.png</File>
+    <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/EnemyBlock.png</File>
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/GunBaseBlock.png</File>
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/LeftWheelBlock.png</File>
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/MainBlock.png</File>
@@ -16,6 +17,7 @@
     <File>E:/УрФУ/MonogameProject/ProjectXXX/Game_on_Monogame/ProjectX/Content/GameSprites/SimpleBlock.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
