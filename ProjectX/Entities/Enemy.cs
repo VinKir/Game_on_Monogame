@@ -4,6 +4,7 @@ using ProjectX.Components;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Threading.Tasks.Dataflow;
 using static ProjectX.Game1;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
@@ -12,6 +13,14 @@ namespace ProjectX.Entities
     public class Enemy : GameObject
     {
         Game1 game;
+
+        float strangeMovingTimer = 10000000f;
+        float strangeMovingTimerTreshold = 1f;
+        Vector2 moveTarget;
+        float moveDistance = 270f;
+        float moveTreshold = 50f;
+        float speed = 10f;
+
         float fireTimer;
         float fireTreshold = 0.5f;
         float fireDistance = 800;
@@ -32,6 +41,12 @@ namespace ProjectX.Entities
 
         public override void Update(GameTime gameTime)
         {
+            MoveMethod(gameTime);
+            FireMethod(gameTime);
+        }
+
+        void FireMethod(GameTime gameTime)
+        {
             fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (fireTimer > fireTreshold &&
                 Vector2.Distance(transform.Position, player.mainBlock.transform.Position)
@@ -40,6 +55,35 @@ namespace ProjectX.Entities
                 fireTimer = 0;
                 game.gameScene.CreateBullet(this,
                     player.mainBlock.transform.Position - transform.Position);
+            }
+        }
+
+        void MoveMethod(GameTime gameTime)
+        {
+            strangeMovingTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (strangeMovingTimer > strangeMovingTimerTreshold)
+            {
+                if (Vector2.Distance(transform.Position, player.mainBlock.transform.Position)
+                > moveDistance)
+                {
+                    var diff = transform.Position - player.mainBlock.transform.Position;
+                    diff.Normalize();
+                    diff = new Vector2(diff.X * moveDistance, diff.Y * moveDistance);
+                    moveTarget = player.mainBlock.transform.Position + diff;
+                }
+                strangeMovingTimer = 0;
+            }
+
+            if (Math.Abs(Vector2.Distance(transform.Position, moveTarget)) > moveTreshold)
+            {
+                transform.Velocity.X -=
+                    Math.Abs(transform.Position.X - moveTarget.X) > 5 ?
+                    Math.Sign(transform.Position.X - moveTarget.X) : 0;
+                transform.Velocity.Y -=
+                    Math.Abs(transform.Position.Y - moveTarget.Y) > 5 ?
+                    Math.Sign(transform.Position.Y - moveTarget.Y) : 0;
+                transform.Position += transform.Velocity * speed;
+                transform.Velocity = Vector2.Zero;
             }
         }
     }

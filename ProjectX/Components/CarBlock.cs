@@ -9,6 +9,7 @@ namespace ProjectX.Components
     {
         Player = 0,
         Enemy = 1,
+        Obstacle = 2,
     }
 
     public class CarBlock : IComponent

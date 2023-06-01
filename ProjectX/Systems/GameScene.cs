@@ -43,19 +43,19 @@ namespace ProjectX.Systems
 
             var punchingBag = new GameObject(game.Content.Load<Texture2D>(BlockPaths[(int)Block.Simple]));
             punchingBag.transform.Position = new Vector2(300, 800);
-            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Enemy));
+            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Obstacle));
             gameObjects.Add(punchingBag);
             punchingBag = new GameObject(game.Content.Load<Texture2D>(BlockPaths[(int)Block.Simple]));
             punchingBag.transform.Position = new Vector2(500, 800);
-            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Enemy));
+            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Obstacle));
             gameObjects.Add(punchingBag);
             punchingBag = new GameObject(game.Content.Load<Texture2D>(BlockPaths[(int)Block.Simple]));
             punchingBag.transform.Position = new Vector2(300, 700);
-            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Enemy));
+            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Obstacle));
             gameObjects.Add(punchingBag);
             punchingBag = new GameObject(game.Content.Load<Texture2D>(BlockPaths[(int)Block.Simple]));
             punchingBag.transform.Position = new Vector2(300, 600);
-            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Enemy));
+            punchingBag.AddComponent(new CarBlock(Block.Simple, Team.Obstacle));
             gameObjects.Add(punchingBag);
 
             #endregion
