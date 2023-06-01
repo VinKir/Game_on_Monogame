@@ -5,18 +5,22 @@ using System.Collections.Generic;
 using static ProjectX.Game1;
 using ProjectX.Entities;
 using ProjectX.Components;
-using System.Net.Sockets;
 
 namespace ProjectX.Systems
 {
     public class GameScene
     {
-        List<GameObject> gameObjects = new List<GameObject>();
-        List<Bullet> bullets = new List<Bullet>();
+        List<GameObject> gameObjects;
+        List<Bullet> bullets;
         List<Button> gameButtons;
         Game1 game;
         GameWindow Window;
         SpriteBatch spriteBatch;
+
+        float enemySpawnTimer;
+        float maxEnemySpawnTreshold = 7f;
+        float enemySpawnTreshold;
+        int enemyMaxCount = 5;
 
         Player player;
         Bullet bullet;
@@ -30,14 +34,14 @@ namespace ProjectX.Systems
 
         public void LoadContent()
         {
+            enemySpawnTreshold = maxEnemySpawnTreshold;
+            gameObjects = new List<GameObject>();
+            bullets = new List<Bullet>();
             bullet = new Bullet(game.Content.Load<Texture2D>("GameSprites/Bullet"), 0);
             player = new Player(game);
             gameObjects.Add(player);
 
-            Enemy enemy1 = new Enemy(game.Content.Load<Texture2D>("GameSprites/EnemyBlock"),
-                game, player);
-            enemy1.transform.Position = new Vector2(1600, 500);
-            gameObjects.Add(enemy1);
+            SpawnEnemy();
 
             #region Тренировочные мишени
 
@@ -118,6 +122,37 @@ namespace ProjectX.Systems
 
             foreach (var component in gameButtons)
                 component.Update(gameTime);
+
+            SpawnEnemies(gameTime);
+        }
+
+        void SpawnEnemies(GameTime gameTime)
+        {
+            enemySpawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (enemySpawnTimer > enemySpawnTreshold)
+            {
+                SpawnEnemy();
+                enemySpawnTimer = 0;
+                enemySpawnTreshold = Math.Max(enemySpawnTreshold-0.1f, 2);
+            }
+        }
+
+        void SpawnEnemy()
+        {
+            Enemy enemy = new Enemy(game.Content.Load<Texture2D>("GameSprites/EnemyBlock"),
+                game, player);
+            var side = new Random().Next(0, 5);
+            if (side == 0) enemy.transform.Position =
+                    new Vector2(-20, new Random().Next(0, Window.ClientBounds.Height));
+            else if (side == 1) enemy.transform.Position =
+                    new Vector2(Window.ClientBounds.Width + 20,
+                    new Random().Next(0, Window.ClientBounds.Height));
+            else if (side == 3) enemy.transform.Position =
+                    new Vector2(new Random().Next(0, Window.ClientBounds.Width), -20);
+            else if (side == 4) enemy.transform.Position =
+                    new Vector2(new Random().Next(0, Window.ClientBounds.Width),
+                    Window.ClientBounds.Height + 20);
+            gameObjects.Add(enemy);
         }
 
         public void CreateBullet(GameObject parent, Vector2 direction)

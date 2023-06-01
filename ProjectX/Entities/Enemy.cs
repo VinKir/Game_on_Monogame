@@ -22,13 +22,18 @@ namespace ProjectX.Entities
         float speed = 10f;
 
         float fireTimer;
-        float fireTreshold = 0.5f;
+        float fireTimerTreshold = 0.5f;
         float fireDistance = 800;
         Player player;
 
 
         public Enemy(Texture2D texture, Game1 game, Player player) : base(texture)
         {
+            fireTimerTreshold = (float)new Random().Next(20, 90) / 100;
+            speed = (float)new Random().Next(6, 15);
+            fireDistance = (float)new Random().Next(500, 1200);
+            moveDistance = (float)new Random().Next(180, 450);
+            strangeMovingTimerTreshold = (float)new Random().Next(80, 150) / 100;
             this.AddComponent(new CarBlock(Block.Enemy, Team.Enemy));
             this.player = player;
             this.game = game;
@@ -48,7 +53,7 @@ namespace ProjectX.Entities
         void FireMethod(GameTime gameTime)
         {
             fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (fireTimer > fireTreshold &&
+            if (fireTimer > fireTimerTreshold &&
                 Vector2.Distance(transform.Position, player.mainBlock.transform.Position)
                 <= fireDistance)
             {
