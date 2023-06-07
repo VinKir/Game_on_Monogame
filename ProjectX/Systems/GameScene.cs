@@ -143,16 +143,8 @@ namespace ProjectX.Systems
                 var enemy = SpawnEnemy();
                 if (timeToBossCounter == timeToBoss)
                 {
+                    enemy = SpawnBoss();
                     timeToBossCounter = 0;
-                    enemy.bounty = 50;
-                    enemy.GetComponent<CarBlock>().maxHp = 500;
-                    enemy.GetComponent<CarBlock>().HP = 500;
-                    enemy.transform.scale = 3;
-                    enemy.speed = 5;
-                    enemy.fireTimerTreshold = 0.05f;
-                    enemy.fireDistance = 1600;
-                    enemy.moveDistance = 500;
-                    enemy.strangeMovingTimerTreshold = 0.8f;
                     // спавним помощниоков босса
                     // чем больше ускорилась игра, тем больше помощников появится
                     for (int i = 1; i < (int)maxEnemySpawnTreshold - enemySpawnTreshold; i++)
@@ -166,6 +158,21 @@ namespace ProjectX.Systems
                 enemySpawnTimer = 0;
                 gameObjects.Add(enemy);
             }
+        }
+
+        Enemy SpawnBoss()
+        {
+            var boss = SpawnEnemy();
+            boss.bounty = 50;
+            boss.GetComponent<CarBlock>().MaxHP = 500;
+            boss.GetComponent<CarBlock>().HP = 500;
+            boss.transform.scale = 3;
+            boss.speed = 5;
+            boss.fireTimerTreshold = 0.05f;
+            boss.fireDistance = 1600;
+            boss.moveDistance = 500;
+            boss.strangeMovingTimerTreshold = 0.8f;
+            return boss;
         }
 
         Enemy SpawnEnemy()

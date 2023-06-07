@@ -46,8 +46,10 @@ namespace ProjectX.Entities
                         car[y][x].isStatic = false;
                         car[y][x].transform.scale = carScaleMultiplier;
                         car[y][x].AddComponent(new CarBlock(block, Team.Player));
+                        car[y][x].GetComponent<CarBlock>().MaxHP = BlockMaxHP[(int)block];
                         car[y][x].AddComponent(new Rigidbody());
                         car[y][x].GetComponent<Rigidbody>().mass = 10;
+
                         if (block == Block.Main)
                         {
                             mainBlock = car[y][x];
@@ -155,15 +157,38 @@ namespace ProjectX.Entities
 
         void ScanCar()
         {
+            int leftWheelsCount = 0;
+            int rightWheelsCount = 0;
             // блоки, которые не соединены с главным - отваливаются
             for (int y = 0; y < car.Count; y++)
                 for (int x = 0; x < car[y].Count; x++)
-                    if (car[y][x] != null && car[y][x].isRemoved)
+                {
+                    if (car[y][x] != null)
                     {
-                        if (car[y][x].GetComponent<CarBlock>().block == Block.Main)
-                            mainBlock = null;
-                        car[y][x] = null;
+                        if (car[y][x].isRemoved)
+                        {
+                            // выходим в главное меню, если проиграли
+                            if (car[y][x].GetComponent<CarBlock>().block == Block.Main)
+                                game.state = GameState.Menu;
+                            car[y][x] = null;
+                        }
+                        else if (car[y][x].GetComponent<CarBlock>().block == Block.LeftWheel)
+                            leftWheelsCount++;
+                        else if (car[y][x].GetComponent<CarBlock>().block == Block.RightWheel)
+                            rightWheelsCount++;
                     }
+                }
+
+            CalculateSpeedAndRotSpeed(leftWheelsCount, rightWheelsCount);
+        }
+
+        void CalculateSpeedAndRotSpeed(int leftWheelsCount, int rightWheelsCount)
+        {
+            var wheelDiff = Math.Abs(leftWheelsCount - rightWheelsCount);
+            carSpeed = Math.Max(leftWheelsCount, rightWheelsCount) * 1.8f;
+            carSpeed -= wheelDiff * 1.2f;
+            carRotationSpeed = 0.01f * Math.Max(leftWheelsCount, rightWheelsCount);
+            carRotationSpeed -= wheelDiff * 0.008f;
         }
     }
 }

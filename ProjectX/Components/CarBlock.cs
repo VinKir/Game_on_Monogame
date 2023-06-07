@@ -15,12 +15,22 @@ namespace ProjectX.Components
     public class CarBlock : IComponent
     {
         int hp;
-        public int maxHp = 100;
+        int maxHp = 100;
         public Block block;
         public Team team;
 
         GameObject gameObject;
         public GameObject boundEntity { get => gameObject; set => gameObject = value; }
+
+        public int MaxHP
+        {
+            get { return maxHp; }
+            set
+            {
+                maxHp = value;
+                hp = maxHp;
+            }
+        }
 
         public int HP
         {

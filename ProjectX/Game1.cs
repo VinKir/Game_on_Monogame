@@ -25,6 +25,9 @@ namespace ProjectX
             None, Main, Simple, LeftWheel, RightWheel, GunBase, Cannon, Enemy
         }
 
+        public static int[] BlockMaxHP = new int[] {
+            0, 30, 100, 40, 40, 100, 50, 100};
+
         public static int[] BlockPrice = new int[] {
             0, 0, 10, 20, 20, 10, 50, 10};
 

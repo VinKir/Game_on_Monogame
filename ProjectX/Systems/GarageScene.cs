@@ -17,7 +17,7 @@ namespace ProjectX.Systems
         public Block[,] carBlocks;
         public Button[,] carBlocksButtons;
 
-        public static int Money = 160;
+        public static int Money = 170;
 
         Block currBlock;
 
@@ -52,8 +52,7 @@ namespace ProjectX.Systems
             carBlocks[2, 2] = Block.Simple;
             carBlocks[3, 0] = Block.RightWheel;
             carBlocks[3, 2] = Block.RightWheel;
-            Money -= 160;
-
+            Money -= 170;
         }
 
         public void LoadContent()
