@@ -20,7 +20,8 @@ namespace ProjectX.Systems
         float enemySpawnTimer;
         float maxEnemySpawnTreshold = 7f;
         float enemySpawnTreshold;
-        int enemyMaxCount = 5;
+        int timeToBoss = 10;
+        int timeToBossCounter = 0;
 
         Player player;
         Bullet bullet;
@@ -82,24 +83,30 @@ namespace ProjectX.Systems
 
         public void UpdateGameplay(GameTime gameTime)
         {
-            #region удаляем удаленные(ненужные) объекты из списка объектов, добавляем деньги за убитых врагов
-
+            // удаляем удаленные(ненужные) объекты из списка объектов
             for (int i = 0; i < gameObjects.Count; i++)
                 if (gameObjects[i].isRemoved)
                 {
+                    // выход в главное меню, если уничтожен главный блок
+                    if (gameObjects[i].GetComponent<CarBlock>() != null
+                        &&
+                        gameObjects[i].GetComponent<CarBlock>().block == Block.Main)
+                        game.state = GameState.Menu;
+
+                    // выдача награды за убийство врага
                     if (gameObjects[i] as Enemy != null)
-                        GarageScene.Money += 10;// gameObjects[i].GetComponent<Enemy>().bounty;
+                        GarageScene.Money += (gameObjects[i] as Enemy).bounty;
+
                     gameObjects.RemoveAt(i);
                     i--;
                 }
+            // избавляемся от исезнувших снарядов
             for (int i = 0; i < bullets.Count; i++)
                 if (bullets[i].isRemoved)
                 {
                     bullets.RemoveAt(i);
                     i--;
                 }
-
-            #endregion
 
             foreach (var go in gameObjects)
                 go.Update(gameTime);
@@ -133,16 +140,43 @@ namespace ProjectX.Systems
             enemySpawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (enemySpawnTimer > enemySpawnTreshold)
             {
-                SpawnEnemy();
+                var enemy = SpawnEnemy();
+                if (timeToBossCounter == timeToBoss)
+                {
+                    timeToBossCounter = 0;
+                    enemy.bounty = 50;
+                    enemy.GetComponent<CarBlock>().maxHp = 500;
+                    enemy.GetComponent<CarBlock>().HP = 500;
+                    enemy.transform.scale = 3;
+                    enemy.speed = 5;
+                    enemy.fireTimerTreshold = 0.05f;
+                    enemy.fireDistance = 1600;
+                    enemy.moveDistance = 500;
+                    enemy.strangeMovingTimerTreshold = 0.8f;
+                    // спавним помощниоков босса
+                    // чем больше ускорилась игра, тем больше помощников появится
+                    for (int i = 1; i < (int)maxEnemySpawnTreshold - enemySpawnTreshold; i++)
+                        gameObjects.Add(SpawnEnemy());
+                }
+                else
+                {
+                    timeToBossCounter++;
+                    enemySpawnTreshold = Math.Max(enemySpawnTreshold - 0.1f, 2);
+                }
                 enemySpawnTimer = 0;
-                enemySpawnTreshold = Math.Max(enemySpawnTreshold - 0.1f, 2);
+                gameObjects.Add(enemy);
             }
         }
 
-        void SpawnEnemy()
+        Enemy SpawnEnemy()
         {
             Enemy enemy = new Enemy(game.Content.Load<Texture2D>("GameSprites/EnemyBlock"),
                 game, player);
+            enemy.fireTimerTreshold = (float)new Random().Next(20, 90) / 100;
+            enemy.speed = (float)new Random().Next(6, 15);
+            enemy.fireDistance = (float)new Random().Next(500, 1200);
+            enemy.moveDistance = (float)new Random().Next(180, 450);
+            enemy.strangeMovingTimerTreshold = (float)new Random().Next(80, 150) / 100;
             var side = new Random().Next(0, 5);
             if (side == 0) enemy.transform.Position =
                     new Vector2(-20, new Random().Next(0, Window.ClientBounds.Height));
@@ -154,7 +188,7 @@ namespace ProjectX.Systems
             else if (side == 4) enemy.transform.Position =
                     new Vector2(new Random().Next(0, Window.ClientBounds.Width),
                     Window.ClientBounds.Height + 20);
-            gameObjects.Add(enemy);
+            return enemy;
         }
 
         public void CreateBullet(GameObject parent, Vector2 direction)

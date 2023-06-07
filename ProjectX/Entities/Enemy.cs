@@ -14,29 +14,23 @@ namespace ProjectX.Entities
     {
         public int bounty = 10;
 
-        Game1 game;
+        public float strangeMovingTimerTreshold = 1f;
+        public float moveDistance = 270f;
+        public float moveTreshold = 50f;
+        public float speed = 10f;
+
+        public float fireTimerTreshold = 0.5f;
+        public float fireDistance = 800;
 
         float strangeMovingTimer = 10000000f;
-        float strangeMovingTimerTreshold = 1f;
-        Vector2 moveTarget;
-        float moveDistance = 270f;
-        float moveTreshold = 50f;
-        float speed = 10f;
-
         float fireTimer;
-        float fireTimerTreshold = 0.5f;
-        float fireDistance = 800;
 
+        Game1 game;
+        Vector2 moveTarget;
         Player player;
-
 
         public Enemy(Texture2D texture, Game1 game, Player player) : base(texture)
         {
-            fireTimerTreshold = (float)new Random().Next(20, 90) / 100;
-            speed = (float)new Random().Next(6, 15);
-            fireDistance = (float)new Random().Next(500, 1200);
-            moveDistance = (float)new Random().Next(180, 450);
-            strangeMovingTimerTreshold = (float)new Random().Next(80, 150) / 100;
             this.AddComponent(new CarBlock(Block.Enemy, Team.Enemy));
             this.player = player;
             this.game = game;
