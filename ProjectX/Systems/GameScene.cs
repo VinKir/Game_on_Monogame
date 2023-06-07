@@ -82,11 +82,13 @@ namespace ProjectX.Systems
 
         public void UpdateGameplay(GameTime gameTime)
         {
-            #region удаляем удаленные(ненужные) объекты из списка объектов
+            #region удаляем удаленные(ненужные) объекты из списка объектов, добавляем деньги за убитых врагов
 
             for (int i = 0; i < gameObjects.Count; i++)
                 if (gameObjects[i].isRemoved)
                 {
+                    if (gameObjects[i] as Enemy != null)
+                        GarageScene.Money += 10;// gameObjects[i].GetComponent<Enemy>().bounty;
                     gameObjects.RemoveAt(i);
                     i--;
                 }
@@ -133,7 +135,7 @@ namespace ProjectX.Systems
             {
                 SpawnEnemy();
                 enemySpawnTimer = 0;
-                enemySpawnTreshold = Math.Max(enemySpawnTreshold-0.1f, 2);
+                enemySpawnTreshold = Math.Max(enemySpawnTreshold - 0.1f, 2);
             }
         }
 
@@ -179,6 +181,16 @@ namespace ProjectX.Systems
 
             foreach (var go in gameButtons)
                 go.Draw(gameTime, spriteBatch);
+
+            // текст "Money"
+            spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
+                "Money ", new Vector2(1530, 50), Color.Yellow,
+                0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
+            // отрисовываем, сколько денег есть у игрока
+            spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
+                GarageScene.Money.ToString(), new Vector2(1700, 50), Color.Yellow,
+                0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
+
             spriteBatch.End();
         }
     }

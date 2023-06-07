@@ -19,10 +19,15 @@ namespace ProjectX
             Garage,
             Gameplay,
         }
+
         public enum Block
         {
             None, Main, Simple, LeftWheel, RightWheel, GunBase, Cannon, Enemy
         }
+
+        public static int[] BlockPrice = new int[] {
+            0, 0, 10, 20, 20, 10, 50, 10};
+
         public static string[] BlockPaths = new string[] {
             "Controls/AddBlockButton",
             "GameSprites/MainBlock",

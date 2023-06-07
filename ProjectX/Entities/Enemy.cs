@@ -12,6 +12,8 @@ namespace ProjectX.Entities
 {
     public class Enemy : GameObject
     {
+        public int bounty = 10;
+
         Game1 game;
 
         float strangeMovingTimer = 10000000f;
@@ -24,6 +26,7 @@ namespace ProjectX.Entities
         float fireTimer;
         float fireTimerTreshold = 0.5f;
         float fireDistance = 800;
+
         Player player;
 
 

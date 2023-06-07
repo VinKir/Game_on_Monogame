@@ -17,6 +17,8 @@ namespace ProjectX.Systems
         public Block[,] carBlocks;
         public Button[,] carBlocksButtons;
 
+        public static int Money = 160;
+
         Block currBlock;
 
         public GarageScene(Game1 game, SpriteBatch spriteBatch)
@@ -50,6 +52,7 @@ namespace ProjectX.Systems
             carBlocks[2, 2] = Block.Simple;
             carBlocks[3, 0] = Block.RightWheel;
             carBlocks[3, 2] = Block.RightWheel;
+            Money -= 160;
 
         }
 
@@ -85,8 +88,14 @@ namespace ProjectX.Systems
                     var safeCurrBlock = currBlock;
                     changeMachineBlockButton.Click += (s, e) =>
                     {
-                        carBlocks[safeX, safeY] = currBlock;
-                        changeMachineBlockButton.sprite.texture = game.Content.Load<Texture2D>(BlockPaths[(int)carBlocks[safeX, safeY]]);
+                        if (Money >=
+                            BlockPrice[(int)currBlock] - BlockPrice[(int)carBlocks[safeX, safeY]])
+                        {
+                            Money += BlockPrice[(int)carBlocks[safeX, safeY]];
+                            carBlocks[safeX, safeY] = currBlock;
+                            changeMachineBlockButton.sprite.texture = game.Content.Load<Texture2D>(BlockPaths[(int)carBlocks[safeX, safeY]]);
+                            Money -= BlockPrice[(int)currBlock];
+                        }
                     };
                     garageMenuGameObjects.Add(changeMachineBlockButton);
                 }
@@ -112,10 +121,10 @@ namespace ProjectX.Systems
             #endregion
         }
 
-        private void chooseBlock_Click(object sender, EventArgs e, int id)
+        /* private void chooseBlock_Click(object sender, EventArgs e, int id)
         {
             currBlock = (Block)id;
-        }
+        }*/
 
         public void UpdateGarage(GameTime gameTime)
         {
@@ -130,6 +139,16 @@ namespace ProjectX.Systems
             _spriteBatch.Begin();
             foreach (var component in garageMenuGameObjects)
                 component.Draw(gameTime, _spriteBatch);
+
+            // текст "Money"
+            _spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
+                "Money ", new Vector2(1530, 50), Color.Yellow,
+                0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
+            // отрисовываем, сколько денег есть у игрока
+            _spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
+                Money.ToString(), new Vector2(1700, 50), Color.Yellow,
+                0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
+
             _spriteBatch.End();
         }
 
