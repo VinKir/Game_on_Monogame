@@ -44,3 +44,5 @@ E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Release\net
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Release\net6.0-windows\ProjectX.pdb
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Release\net6.0-windows\ProjectX.genruntimeconfig.cache
 E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\obj\Release\net6.0-windows\ref\ProjectX.dll
+E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Release\net6.0-windows\Content\GameSprites\Bullet.xnb
+E:\УрФУ\MonogameProject\ProjectXXX\Game_on_Monogame\ProjectX\bin\Release\net6.0-windows\Content\GameSprites\EnemyBlock.xnb

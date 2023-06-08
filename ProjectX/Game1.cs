@@ -67,9 +67,9 @@ namespace ProjectX
             ScreenHeight = _graphics.PreferredBackBufferHeight;
             ScreenWidth = _graphics.PreferredBackBufferWidth;
 
-            //_graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = true;
             // to do -------------------------------------------------------------------
-            // разкоментировать, когда игра будет готова, чтоб игра была на весь экран
+            // раcкоментировать, когда игра будет готова, чтоб игра была на весь экран
             // пока это включено не выходит нормально отлаживать ошибки
 
             _graphics.ApplyChanges();
