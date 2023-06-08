@@ -35,14 +35,16 @@ namespace ProjectX.Systems
 
         public void LoadContent()
         {
+            enemySpawnTimer = 0;
             enemySpawnTreshold = maxEnemySpawnTreshold;
+            timeToBossCounter = 0;
             gameObjects = new List<GameObject>();
             bullets = new List<Bullet>();
             bullet = new Bullet(game.Content.Load<Texture2D>("GameSprites/Bullet"), 0);
             player = new Player(game);
             gameObjects.Add(player);
 
-            SpawnEnemy();
+            gameObjects.Add(SpawnEnemy());
 
             #region Тренировочные мишени
 
@@ -95,7 +97,7 @@ namespace ProjectX.Systems
 
                     // выдача награды за убийство врага
                     if (gameObjects[i] as Enemy != null)
-                        GarageScene.Money += (gameObjects[i] as Enemy).bounty;
+                        Money += (gameObjects[i] as Enemy).bounty;
 
                     gameObjects.RemoveAt(i);
                     i--;
@@ -163,9 +165,10 @@ namespace ProjectX.Systems
         Enemy SpawnBoss()
         {
             var boss = SpawnEnemy();
-            boss.bounty = 50;
+            boss.bounty = 20;
             boss.GetComponent<CarBlock>().MaxHP = 500;
-            boss.GetComponent<CarBlock>().HP = 500;
+            boss.GetComponent<CarBlock>().HP = 500 + 200 *
+                ((int)maxEnemySpawnTreshold - (int)enemySpawnTreshold);
             boss.transform.scale = 3;
             boss.speed = 5;
             boss.fireTimerTreshold = 0.05f;
@@ -179,6 +182,8 @@ namespace ProjectX.Systems
         {
             Enemy enemy = new Enemy(game.Content.Load<Texture2D>("GameSprites/EnemyBlock"),
                 game, player);
+            enemy.GetComponent<CarBlock>().MaxHP += 20 *
+                ((int)maxEnemySpawnTreshold - (int)enemySpawnTreshold);
             enemy.fireTimerTreshold = (float)new Random().Next(20, 90) / 100;
             enemy.speed = (float)new Random().Next(6, 15);
             enemy.fireDistance = (float)new Random().Next(500, 1200);
@@ -229,7 +234,7 @@ namespace ProjectX.Systems
                 0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
             // отрисовываем, сколько денег есть у игрока
             spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
-                GarageScene.Money.ToString(), new Vector2(1700, 50), Color.Yellow,
+                Money.ToString(), new Vector2(1700, 50), Color.Yellow,
                 0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
 
             spriteBatch.End();

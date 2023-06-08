@@ -17,9 +17,7 @@ namespace ProjectX.Systems
         public Block[,] carBlocks;
         public Button[,] carBlocksButtons;
 
-        public static int Money = 170;
-
-        Block currBlock;
+        Block currentBlock;
 
         public GarageScene(Game1 game, SpriteBatch spriteBatch)
         {
@@ -84,16 +82,16 @@ namespace ProjectX.Systems
                         new Vector2(buildingZoneX + 50 * x, buildingZoneY + 50 * y);
                     var safeX = x;
                     var safeY = y;
-                    var safeCurrBlock = currBlock;
+                    var safeCurrBlock = currentBlock;
                     changeMachineBlockButton.Click += (s, e) =>
                     {
                         if (Money >=
-                            BlockPrice[(int)currBlock] - BlockPrice[(int)carBlocks[safeX, safeY]])
+                            BlockPrice[(int)currentBlock] - BlockPrice[(int)carBlocks[safeX, safeY]])
                         {
                             Money += BlockPrice[(int)carBlocks[safeX, safeY]];
-                            carBlocks[safeX, safeY] = currBlock;
+                            carBlocks[safeX, safeY] = currentBlock;
                             changeMachineBlockButton.sprite.texture = game.Content.Load<Texture2D>(BlockPaths[(int)carBlocks[safeX, safeY]]);
-                            Money -= BlockPrice[(int)currBlock];
+                            Money -= BlockPrice[(int)currentBlock];
                         }
                     };
                     garageMenuGameObjects.Add(changeMachineBlockButton);
@@ -111,7 +109,7 @@ namespace ProjectX.Systems
                 var addCurrBlockButton = new Button(game.Content.Load<Texture2D>(blockPath),
                     game.Content.Load<SpriteFont>("Fonts/Font"));
                 addCurrBlockButton.transform.Position = new Vector2(10, currPosY);
-                addCurrBlockButton.Click += (s, e) => { currBlock = (Block)id; };//+= chooseBlock_Click;
+                addCurrBlockButton.Click += (s, e) => { currentBlock = (Block)id; };//+= chooseBlock_Click;
 
                 garageMenuGameObjects.Add(addCurrBlockButton);
                 currPosY += 100;
@@ -147,6 +145,16 @@ namespace ProjectX.Systems
             _spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
                 Money.ToString(), new Vector2(1700, 50), Color.Yellow,
                 0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
+
+            // текст "Price"
+            _spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
+                "Price", new Vector2(100, 150), Color.Yellow,
+                0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
+            // отрисовываем, цены для блоков
+            for (int i = 0; i < BlockPrice.Length; i++)
+                _spriteBatch.DrawString(game.Content.Load<SpriteFont>("Fonts/Font"),
+                    BlockPrice[i].ToString(), new Vector2(100, 200 + i * 100), Color.Yellow,
+                    0, new Vector2(0, 0), 3, SpriteEffects.None, 0);
 
             _spriteBatch.End();
         }

@@ -13,6 +13,8 @@ namespace ProjectX
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        public static int Money = 170;
+
         public enum GameState
         {
             Menu,

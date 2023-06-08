@@ -12,7 +12,7 @@ namespace ProjectX.Entities
 {
     public class Enemy : GameObject
     {
-        public int bounty = 10;
+        public int bounty = 2;
 
         public float strangeMovingTimerTreshold = 1f;
         public float moveDistance = 270f;
